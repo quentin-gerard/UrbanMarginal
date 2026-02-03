@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import vue.Arene;
+import controleur.Controle;
 
 public class EntreeJeu extends JFrame {
 
@@ -19,11 +20,12 @@ public class EntreeJeu extends JFrame {
 	private JTextField txtIp;
 	private ChoixJoueur frmChoixJoueur;
 	private Arene frmArene;
+	private Controle controle;
 
 	/**
 	 * Create the frame.
 	 */
-	public EntreeJeu() {
+	public EntreeJeu(Controle controle) {
 		setTitle("UrbanMarginal");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,6 +78,7 @@ public class EntreeJeu extends JFrame {
 		});
 		btnExit.setBounds(187, 93, 89, 23);
 		contentPane.add(btnExit);
+		this.controle = controle;
 
 	}
 	
@@ -83,18 +86,14 @@ public class EntreeJeu extends JFrame {
 	 * clic sur bouton btnStart
 	 */
 	private void btnStart_clic() {
-		this.frmArene = new Arene();
-		this.frmArene.setVisible(true);
-		this.dispose();
+		this.controle.evenementEntreeJeu("serveur");
 	}
 	
 	/*
 	 * Clic sur bouton btnConnect
 	 */
 	private void btnConnect_clic() {
-		this.frmChoixJoueur = new ChoixJoueur();
-		this.frmChoixJoueur.setVisible(true);
-		this.dispose();
+		this.controle.evenementEntreeJeu(txtIp.getText().toString());
 	}
 	
 	/* 

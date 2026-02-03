@@ -1,5 +1,6 @@
 package vue;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.net.URL;
@@ -9,23 +10,39 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import vue.Arene;
+import controleur.Controle;
+import javax.swing.SwingConstants;
 
 public class ChoixJoueur extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textPseudo;
+	private JLabel lblPersonnage;
 	private Arene frmArene;
+	private Controle controle;
+	private int numPerso = 1;
+	private static int maxPerso = 3;
 
+	/**
+	 * Affiche perso
+	 */
+	private void affichePerso() {
+		String chemin = "personnages/perso"+numPerso+"marche1d1.gif";
+		URL resource = getClass().getClassLoader().getResource(chemin);
+		lblPersonnage.setIcon(new ImageIcon(resource));
+	}
+	
 	/**
 	 * Create the frame.
 	 */
-	public ChoixJoueur() {
+	public ChoixJoueur(Controle controle) {
 		setTitle("Choice");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,6 +51,11 @@ public class ChoixJoueur extends JFrame {
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		lblPersonnage = new JLabel("");
+		lblPersonnage.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPersonnage.setBounds(137, 115, 128, 119);
+		contentPane.add(lblPersonnage);
 		
 		textPseudo = new JTextField();
 		textPseudo.setBounds(137, 245, 128, 20);
@@ -46,6 +68,14 @@ public class ChoixJoueur extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				lblPrecedent_clic();
 			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				sourisDoigt();
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				sourisNormale();
+			}
 		});
 		lblPrecedent.setBounds(61, 144, 34, 47);
 		contentPane.add(lblPrecedent);
@@ -55,6 +85,14 @@ public class ChoixJoueur extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				lblSuivant_clic();
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				sourisDoigt();
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				sourisNormale();
 			}
 		});
 		lblSuivant.setBounds(301, 144, 34, 47);
@@ -66,6 +104,14 @@ public class ChoixJoueur extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				lblGo_clic();
 			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				sourisDoigt();
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				sourisNormale();
+			}
 		});
 		lblGo.setBounds(308, 193, 70, 72);
 		contentPane.add(lblGo);
@@ -76,30 +122,61 @@ public class ChoixJoueur extends JFrame {
 		String chemin = "fonds/fondchoix.jpg";
 		URL resource = getClass().getClassLoader().getResource(chemin);
 		lblFond.setIcon(new ImageIcon(resource));
-
+		
+		this.controle = controle;
+		affichePerso();
 	}
 	
 	/*
 	 * Clic sur label lblPrecedent
 	 */
 	private void lblPrecedent_clic() {
-		System.out.println("precedent");
+		if (numPerso > 1) {
+			numPerso -= 1;
+		}
+		else {
+			numPerso = maxPerso;
+		}
+		affichePerso();
+		
 	}
 	
 	/*
 	 * Clic sur label lblSuivant
 	 */
 	private void lblSuivant_clic() {
-		System.out.println("suivant");
+		if (numPerso < maxPerso) {
+			numPerso += 1;
+		}
+		else {
+			numPerso = 1;
+		}
+		affichePerso();
 	}
 	
 	/*
 	 * Clic sur label lblGo
 	 */
 	private void lblGo_clic() {
-		this.frmArene = new Arene();
-		this.frmArene.setVisible(true);
-		this.dispose();
+		if (textPseudo.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "La saisie du pseudo est obligatoire");
+		}
+		else {
+			this.controle.evenementChoixJoueur(textPseudo.getText(), numPerso);
+		}
 	}
-
+	
+	/*
+	 * Changement en curseur normal
+	 */
+	private void sourisNormale() {
+		contentPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+	
+	/*
+	 * Changement en curseur doigt
+	 */
+	private void sourisDoigt() {
+		contentPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
 }
