@@ -4,6 +4,9 @@ import vue.EntreeJeu;
 import vue.Arene;
 import vue.ChoixJoueur;
 import outils.connexion.ServeurSocket;
+
+import javax.swing.JPanel;
+
 import modele.Jeu;
 import modele.JeuClient;
 import modele.JeuServeur;
@@ -11,7 +14,7 @@ import outils.connexion.AsyncResponse;
 import outils.connexion.Connection;
 import outils.connexion.ClientSocket;
 
-public class Controle implements AsyncResponse {
+public class Controle implements AsyncResponse, Global {
 	
 	private Arene frmArene;
 	private EntreeJeu frmEntreeJeu ;
@@ -46,9 +49,10 @@ public class Controle implements AsyncResponse {
 		if (info == "serveur") {
 			new ServeurSocket(this, PORT);
 			this.leJeu = new JeuServeur(this);
-			frmArene = new Arene();
-			frmArene.setVisible(true);
 			frmEntreeJeu.dispose();
+			frmArene = new Arene();
+			((JeuServeur)leJeu).constructionMurs();
+			frmArene.setVisible(true);
 		}
 		else {
 			new ClientSocket(this, info, PORT);
@@ -59,6 +63,25 @@ public class Controle implements AsyncResponse {
 		frmChoixJoueur.dispose();
 		frmArene.setVisible(true);
 		((JeuClient)this.leJeu).envoi("pseudo" + "~" + pseudo + "~" + numPerso);
+	}
+	
+	public void evenementJeuServeur(String ordre, Object info) {
+		switch (ordre) {
+		case AJOUTMUR :
+			this.frmArene.AjoutMurs(info);
+			break;
+		case AJOUTPANELMURS :
+			this.leJeu.envoi((Connection)info, this.frmArene.getJpnMurs());
+			break;
+		}
+	}
+	
+	public void evenementJeuClient(String ordre, Object info) {
+		switch (ordre) {
+			case AJOUTPANELMURS :
+				this.frmArene.setJpnMurs((JPanel)info);
+				break;
+		}
 	}
 
 	@Override

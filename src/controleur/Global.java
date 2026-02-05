@@ -86,5 +86,12 @@ public interface Global {
 	int HAUTEURMUR = 35;
 	int LARGEURMUR = 34;
 
+	String CHEMINMURS = "murs"+CHEMINSEPARATOR;
+	String MUR = CHEMINMURS+"mur.gif";
+	
+	int NBMURS = 20;
+	
+	String AJOUTMUR = "ajout mur";
+	String AJOUTPANELMURS = "ajout panel murs";
 
 }

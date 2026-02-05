@@ -3,13 +3,14 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import controleur.Controle;
+import controleur.Global;
 import outils.connexion.Connection;
 
 /**
  * Gestion du jeu côté serveur
  *
  */
-public class JeuServeur extends Jeu {
+public class JeuServeur extends Jeu implements Global {
 
 	/**
 	 * Collection de murs
@@ -37,6 +38,7 @@ public class JeuServeur extends Jeu {
 		String[] message = ((String)info).split("~");
 		switch (message[0]) {
 		case "pseudo" :
+			this.controle.evenementJeuServeur(AJOUTPANELMURS, connection);
 			String pseudo = message[1];
 			Integer numPerso = Integer.parseInt(message[2]);
 			this.lesJoueurs.get(connection).initPerso(pseudo, numPerso);
@@ -58,6 +60,11 @@ public class JeuServeur extends Jeu {
 	 * Génération des murs
 	 */
 	public void constructionMurs() {
+		for (int i = 0; i < NBMURS; i++) {
+			this.lesMurs.add(new Mur());
+			this.controle.evenementJeuServeur(AJOUTMUR, lesMurs.get(lesMurs.size()-1).getJLabel());
+		}
+		
 	}
 	
 }
