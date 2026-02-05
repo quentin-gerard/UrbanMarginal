@@ -103,6 +103,10 @@ public class Joueur extends Objet implements Global {
 			}while(this.toucheJoueur(lesJoueurs) || this.toucheMur(lesMurs));
 	}
 	
+	public String getPseudo() {
+		return pseudo;
+	}
+	
 	/**
 	 * Affiche le personnage et son message
 	 */

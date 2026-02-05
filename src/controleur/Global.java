@@ -55,6 +55,7 @@ public interface Global {
 	/**
 	 * Message "connexion" envoyé par la classe Connection
 	 */
+	String CLIENT = "client";
 	String CONNEXION = "connexion";
 	/**
 	 * Message "réception" envoyé par la classe Connection
@@ -104,5 +105,9 @@ public interface Global {
 	
 	String AJOUTJLABELJEU = "ajout jlabel jeu";
 	String MODIFPANELJEU = "modif jpanel jeu";
+	
+	String TCHAT = "tchat";
+	String AJOUTPHRASE = "ajout phrase";
+	String MODIFTCHAT = "modif tchat";
 
 }

@@ -51,7 +51,7 @@ public class Controle implements AsyncResponse, Global {
 			new ServeurSocket(this, PORT);
 			this.leJeu = new JeuServeur(this);
 			frmEntreeJeu.dispose();
-			frmArene = new Arene();
+			frmArene = new Arene(this, SERVEUR);
 			((JeuServeur)leJeu).constructionMurs();
 			frmArene.setVisible(true);
 		}
@@ -80,6 +80,10 @@ public class Controle implements AsyncResponse, Global {
 		case MODIFPANELJEU :
 			this.leJeu.envoi((Connection)info, this.frmArene.getJpnJeu());
 			break;
+		case AJOUTPHRASE :
+			this.frmArene.ajoutTchat((String)info);
+			((JeuServeur)this.leJeu).envoi(this.frmArene.getTextChat());
+			break;
 		}
 	}
 	
@@ -91,7 +95,14 @@ public class Controle implements AsyncResponse, Global {
 			case MODIFPANELJEU :
 				this.frmArene.setJpnJeu((JPanel)info);
 				break;
+			case MODIFTCHAT :
+				this.frmArene.setTextChat((String)info);
+				break;
 		}
+	}
+	
+	public void evenementArene(String info) {
+		((JeuClient)this.leJeu).envoi(TCHAT + STRINGSEPARE + info);
 	}
 
 	@Override
@@ -102,7 +113,7 @@ public class Controle implements AsyncResponse, Global {
 		case "connexion":
 			if(!(this.leJeu instanceof JeuServeur)) {
 				frmEntreeJeu.dispose();
-				frmArene = new Arene();
+				frmArene = new Arene(this, CLIENT);
 				frmChoixJoueur = new ChoixJoueur(this);
 				frmChoixJoueur.setVisible(true);
 				this.leJeu = new JeuClient(this);
