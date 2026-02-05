@@ -93,5 +93,16 @@ public interface Global {
 	
 	String AJOUTMUR = "ajout mur";
 	String AJOUTPANELMURS = "ajout panel murs";
+	
+	int HAUTEURPERSO = 44;
+	int LARGEURPERSO = 39;
+	int HAUTEURMESSAGE = 8;
+	int MARGEMESSAGE = 10;
+	
+	int GAUCHE = 0;
+	int DROITE = 1;
+	
+	String AJOUTJLABELJEU = "ajout jlabel jeu";
+	String MODIFPANELJEU = "modif jpanel jeu";
 
 }
