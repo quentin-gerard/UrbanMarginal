@@ -45,6 +45,14 @@ public interface Global {
 	 */
 	String MARCHE = "marche";
 	/**
+	 * état touché du personnage
+	 */
+	String TOUCHE = "touche";
+	/**
+	 * état mort du personnage
+	 */
+	String MORT = "mort";
+	/**
 	 * Caractère de séparation dans les chaines transférées
 	 */
 	String STRINGSEPARE = "~";
@@ -104,6 +112,14 @@ public interface Global {
 	int DROITE = 1;
 	int DEPLACEMENT = 10;
 	int NBETAPESMARCHE = 4;
+	/**
+	 * nombre d'étapes (d'images) pour donner l'impression d'être touché
+	 */
+	int NBETAPESTOUCHE = 2;
+	/**
+	 * nombre d'étapes (d'images) pour donner l'impresson de mourir
+	 */
+	int NBETAPESMORT = 2;
 	
 	String AJOUTJLABELJEU = "ajout jlabel jeu";
 	String MODIFPANELJEU = "modif jpanel jeu";
@@ -113,5 +129,10 @@ public interface Global {
 	String MODIFTCHAT = "modif tchat";
 	
 	String ACTION = "action";
+	
+	String CHEMINBOULES = "boules"+CHEMINSEPARATOR;
+	String BOULE = CHEMINBOULES+"boule.gif";
+	int LARGEURBOULE = 17;
+	int HAUTEURBOULE = 17;
 
 }
