@@ -99,6 +99,9 @@ public class Controle implements AsyncResponse, Global {
 			case MODIFTCHAT :
 				this.frmArene.setTextChat((String)info);
 				break;
+			case JOUESON :
+				this.frmArene.joueSon((Integer)info);
+				break;
 		}
 	}
 	

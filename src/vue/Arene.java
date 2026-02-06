@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controleur.Global;
+import outils.son.Son;
 import controleur.Controle;
 
 import javax.swing.JLabel;
@@ -33,6 +34,7 @@ public class Arene extends JFrame implements Global {
 	 * booléen pour savoir si c'est l'arène du client ou du serveur
 	 */
 	private boolean client;
+	private Son[] lesSons = new Son[SON.length];
 	
 	private void contentPane_KeyPressed(KeyEvent e) {
 		int touche = -1;
@@ -49,6 +51,14 @@ public class Arene extends JFrame implements Global {
 		if (touche != -1) {
 			this.controle.evenementArene(touche);
 		}
+	}
+	
+	/**
+	 * Joue le son correspondant au numéro reçu
+	 * @param numSon numéro du son (0 : fight, 1 : hurt; 2 : death)
+	 */
+	public void joueSon(Integer numSon) {
+		this.lesSons[numSon].play();
 	}
 
 	/**
@@ -121,6 +131,12 @@ public class Arene extends JFrame implements Global {
 		textChat = new JTextArea();
 		textChat.setEditable(false);
 		jspChat.setViewportView(textChat);
+		
+		if(client) {
+				for (int k=0 ; k<SON.length ; k++) {
+					lesSons[k] = new Son(getClass().getClassLoader().getResource(SON[k])) ;
+				}
+		}
 		
 		this.controle = controle;
 	}

@@ -17,9 +17,12 @@ import java.awt.event.MouseEvent;
 
 import vue.Arene;
 import controleur.Controle;
+import controleur.Global;
+import outils.son.Son;
+
 import javax.swing.SwingConstants;
 
-public class ChoixJoueur extends JFrame {
+public class ChoixJoueur extends JFrame implements Global {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -29,6 +32,11 @@ public class ChoixJoueur extends JFrame {
 	private Controle controle;
 	private int numPerso = 1;
 	private static int maxPerso = 3;
+	private Son welcome;
+	private Son precedent;
+	private Son suivant;
+	private Son go;
+	
 
 	/**
 	 * Affiche perso
@@ -125,12 +133,19 @@ public class ChoixJoueur extends JFrame {
 		
 		this.controle = controle;
 		affichePerso();
+		
+		suivant = new Son(getClass().getClassLoader().getResource(SONSUIVANT));
+		precedent = new Son(getClass().getClassLoader().getResource(SONPRECEDENT));
+		go = new Son(getClass().getClassLoader().getResource(SONGO));
+		welcome = new Son(getClass().getClassLoader().getResource(SONWELCOME));
+		welcome.play();
 	}
 	
 	/*
 	 * Clic sur label lblPrecedent
 	 */
 	private void lblPrecedent_clic() {
+		precedent.play();
 		if (numPerso > 1) {
 			numPerso -= 1;
 		}
@@ -145,6 +160,7 @@ public class ChoixJoueur extends JFrame {
 	 * Clic sur label lblSuivant
 	 */
 	private void lblSuivant_clic() {
+		suivant.play();
 		if (numPerso < maxPerso) {
 			numPerso += 1;
 		}
@@ -158,6 +174,7 @@ public class ChoixJoueur extends JFrame {
 	 * Clic sur label lblGo
 	 */
 	private void lblGo_clic() {
+		go.play();
 		if (textPseudo.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "La saisie du pseudo est obligatoire");
 		}
