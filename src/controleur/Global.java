@@ -102,6 +102,8 @@ public interface Global {
 	
 	int GAUCHE = 0;
 	int DROITE = 1;
+	int DEPLACEMENT = 10;
+	int NBETAPESMARCHE = 4;
 	
 	String AJOUTJLABELJEU = "ajout jlabel jeu";
 	String MODIFPANELJEU = "modif jpanel jeu";
@@ -109,5 +111,7 @@ public interface Global {
 	String TCHAT = "tchat";
 	String AJOUTPHRASE = "ajout phrase";
 	String MODIFTCHAT = "modif tchat";
+	
+	String ACTION = "action";
 
 }

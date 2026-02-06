@@ -33,6 +33,22 @@ public class Arene extends JFrame implements Global {
 	 * booléen pour savoir si c'est l'arène du client ou du serveur
 	 */
 	private boolean client;
+	
+	private void contentPane_KeyPressed(KeyEvent e) {
+		int touche = -1;
+		int keyPressed = e.getKeyCode();
+		switch(keyPressed) {
+		case KeyEvent.VK_UP :
+		case KeyEvent.VK_DOWN :
+		case KeyEvent.VK_LEFT :
+		case KeyEvent.VK_RIGHT :
+			touche = e.getKeyCode();
+			break;
+		}
+		if (touche != -1) {
+			this.controle.evenementArene(touche);
+		}
+	}
 
 	/**
 	 * Create the frame.
@@ -45,6 +61,14 @@ public class Arene extends JFrame implements Global {
 		this.getContentPane().setPreferredSize(new Dimension(800, 600 + 25 + 140));
 		this.pack();
 		contentPane = new JPanel();
+		if(this.client) {
+			contentPane.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					contentPane_KeyPressed(e);
+				}
+			});
+		}
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
@@ -81,6 +105,14 @@ public class Arene extends JFrame implements Global {
 		}
 		
 		JScrollPane jspChat = new JScrollPane();
+		if (this.client) {
+			jspChat.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					contentPane_KeyPressed(e);
+				}
+			});
+		}
 		jspChat.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		jspChat.setBounds(0, 625, 800, 140);
 		contentPane.add(jspChat);
@@ -114,6 +146,7 @@ public class Arene extends JFrame implements Global {
 		this.jpnJeu.removeAll();
 		this.jpnJeu.add(jpnJeu);
 		this.jpnJeu.repaint();
+		this.contentPane.requestFocus();
 	}
 	
 	public void ajoutJLabelJeu(JLabel unJLabel) {
@@ -144,6 +177,7 @@ public class Arene extends JFrame implements Global {
 				this.controle.evenementArene(this.textSaisie.getText());
 				this.textSaisie.setText("");
 			}
+			this.contentPane.requestFocus();
 		}
 	}
 }
